@@ -7,73 +7,61 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { height: 100%; overflow: hidden; }
-body { background: #000; color: #e8e8e0; font-family: -apple-system, 'Helvetica Neue', sans-serif; }
+body { background: #0a0a0f; color: #e8e8e0; font-family: -apple-system, 'Helvetica Neue', sans-serif; }
 a { color: #999; }
 a:hover { color: #ddd; }
 
 .page { display: flex; flex-direction: column; height: 100vh; }
 
-/* --- HEADER --- */
 .header { padding: 1rem 1.25rem 0.7rem; border-bottom: 1px solid #1a1a1a; flex-shrink: 0; }
 .header h1 { font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
-.header .intro {
-  font-size: 0.78rem; color: #777; line-height: 1.65; max-width: 860px;
-}
+.header .intro { font-size: 0.78rem; color: #777; line-height: 1.65; max-width: 860px; }
 .header .intro strong { color: #ccc; }
 .header .intro a { color: #999; text-decoration: underline; text-underline-offset: 2px; }
 
-/* --- STATS ROW --- */
 .stats-row {
-  display: flex; gap: 1px; border-bottom: 1px solid #1a1a1a; flex-shrink: 0;
-  background: #0a0a0a;
+  display: flex; gap: 1px; border-bottom: 1px solid #1a1a1a; flex-shrink: 0; background: #0a0a0a;
 }
-.stat-box {
-  flex: 1; padding: 0.6rem 1rem; background: #000;
-}
-.stat-box .sb-label { font-size: 0.55rem; font-weight: 600; letter-spacing: 0.12em; color: #555; text-transform: uppercase; }
-.stat-box .sb-value { font-size: 1.15rem; font-weight: 800; color: #fff; margin-top: 0.15rem; }
+.stat-box { flex: 1; padding: 0.55rem 1rem; background: #0a0a0f; }
+.stat-box .sb-label { font-size: 0.5rem; font-weight: 600; letter-spacing: 0.12em; color: #555; text-transform: uppercase; }
+.stat-box .sb-value { font-size: 1.1rem; font-weight: 800; color: #fff; margin-top: 0.1rem; }
 .stat-box .sb-value.lime { color: #dff140; }
 .stat-box .sb-value.red { color: #ff3535; }
-.stat-box .sb-sub { font-size: 0.6rem; color: #444; margin-top: 0.1rem; }
+.stat-box .sb-sub { font-size: 0.55rem; color: #444; margin-top: 0.05rem; }
 
-/* --- CONTROLS --- */
 .controls {
   display: flex; align-items: center; border-bottom: 1px solid #1a1a1a;
-  flex-shrink: 0; padding: 0 0.5rem; background: #050505;
+  flex-shrink: 0; padding: 0 0.5rem; background: #050508;
 }
 .controls button {
   background: none; border: none; color: #555; cursor: pointer;
   font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em;
-  padding: 0.55rem 0.9rem; border-radius: 3px;
+  padding: 0.5rem 0.9rem; border-radius: 3px;
   transition: all 0.15s; text-transform: uppercase;
 }
 .controls button:hover { color: #ccc; background: #111; }
 .controls button.active { color: #000; background: #dff140; }
 .controls .spacer { flex: 1; }
-.controls .legend-hint { font-size: 0.6rem; color: #333; padding-right: 0.5rem; }
+.controls .legend-hint { font-size: 0.58rem; color: #333; padding-right: 0.5rem; }
 
-/* --- TREEMAP --- */
 canvas { display: block; flex: 1; cursor: crosshair; }
 
-/* --- TOOLTIP --- */
 .tooltip {
   position: fixed; display: none; pointer-events: none;
   background: #111; border: 1px solid #2a2a2a; border-radius: 6px;
   padding: 0.8rem 1rem; max-width: 320px; z-index: 10;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.7);
-  font-size: 0.75rem; line-height: 1.5;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.7); font-size: 0.75rem; line-height: 1.5;
 }
 .tooltip .name { font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
+.tooltip .cat { font-size: 0.6rem; color: #555; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.4rem; }
 .tooltip .row { display: flex; justify-content: space-between; gap: 1rem; color: #888; }
 .tooltip .row .val { color: #ddd; font-weight: 600; text-align: right; }
 .tooltip .badge {
   display: inline-block; font-size: 0.6rem; font-weight: 700;
-  letter-spacing: 0.06em; padding: 0.15rem 0.45rem; border-radius: 2px;
-  margin-top: 0.35rem;
+  letter-spacing: 0.06em; padding: 0.15rem 0.45rem; border-radius: 2px; margin-top: 0.35rem;
 }
 .tooltip .note { color: #555; font-size: 0.65rem; font-style: italic; margin-top: 0.4rem; line-height: 1.5; }
 
-/* --- FOOTER --- */
 .foot {
   font-size: 0.55rem; color: #2a2a2a; padding: 0.3rem 1.25rem;
   border-top: 1px solid #111; flex-shrink: 0;
@@ -90,26 +78,24 @@ canvas { display: block; flex: 1; cursor: crosshair; }
     A research tool for exploring <strong>738 occupations</strong> from the
     <a href="https://nationalcareers.service.gov.uk/explore-careers" target="_blank">National Careers Service</a>,
     enriched with employment projections from
-    <a href="https://www.gov.uk/government/publications/labour-market-and-skills-projections-2020-to-2035" target="_blank">Working Futures 2035</a>
-    (DfE&nbsp;/&nbsp;Warwick&nbsp;IER).
-    Each rectangle is one occupation. Area is proportional to number of people employed.
-    Colour indicates the selected metric — toggle between AI&nbsp;exposure, job&nbsp;outlook, growth&nbsp;rate, and pay.
-    Hover for details. Click to open the full profile.
-    AI&nbsp;exposure scores (0–10) estimate how much AI will reshape each role:
-    <strong>0</strong>&nbsp;=&nbsp;physical/manual work with minimal AI&nbsp;impact,
-    <strong>10</strong>&nbsp;=&nbsp;fully digital work AI can largely do today.
+    <a href="https://www.gov.uk/government/publications/labour-market-and-skills-projections-2020-to-2035" target="_blank">Working Futures 2035</a>.
+    Each rectangle is one occupation — area proportional to employment, colour shows the selected metric.
+    Occupations are grouped by SOC major group (labelled).
+    Hover for details, click to open the full profile.
+    AI exposure scores (0–10) estimate how much AI will reshape each role:
+    <strong>0</strong> = physical/manual, <strong>10</strong> = fully digital.
   </div>
 </div>
 
 <div class="stats-row">
   <div class="stat-box"><div class="sb-label">Occupations</div><div class="sb-value" id="s-count">—</div></div>
   <div class="stat-box"><div class="sb-label">Total Jobs (2025)</div><div class="sb-value lime" id="s-jobs">—</div></div>
-  <div class="stat-box"><div class="sb-label">Projected Jobs (2035)</div><div class="sb-value" id="s-jobs35">—</div></div>
+  <div class="stat-box"><div class="sb-label">Projected (2035)</div><div class="sb-value" id="s-jobs35">—</div></div>
   <div class="stat-box"><div class="sb-label">Net Change</div><div class="sb-value" id="s-change">—</div><div class="sb-sub" id="s-changepct"></div></div>
   <div class="stat-box"><div class="sb-label">Avg AI Exposure</div><div class="sb-value lime" id="s-exp">—</div><div class="sb-sub" id="s-exp-sub"></div></div>
   <div class="stat-box"><div class="sb-label">High Exposure (7+)</div><div class="sb-value" id="s-highexp">—</div><div class="sb-sub" id="s-highexp-sub"></div></div>
   <div class="stat-box"><div class="sb-label">Median Pay</div><div class="sb-value" id="s-pay">—</div></div>
-  <div class="stat-box"><div class="sb-label">Declining Jobs</div><div class="sb-value red" id="s-declining">—</div><div class="sb-sub" id="s-declining-sub"></div></div>
+  <div class="stat-box"><div class="sb-label">Declining</div><div class="sb-value red" id="s-declining">—</div><div class="sb-sub" id="s-declining-sub"></div></div>
 </div>
 
 <div class="controls">
@@ -118,14 +104,14 @@ canvas { display: block; flex: 1; cursor: crosshair; }
   <button data-layer="growth">Growth Rate</button>
   <button data-layer="pay">Pay</button>
   <span class="spacer"></span>
-  <span class="legend-hint" id="legend-hint">■ low ——— high</span>
+  <span class="legend-hint" id="legend-hint"></span>
 </div>
 
 <canvas id="canvas"></canvas>
 
 <div class="foot">
-  Occupation profiles: <a href="https://nationalcareers.service.gov.uk" target="_blank">National Careers Service</a> (gov.uk).
-  Employment data: <a href="https://www.gov.uk/government/publications/labour-market-and-skills-projections-2020-to-2035" target="_blank">Working Futures 2035</a> (DfE / Warwick IER), SOC 2020.
+  Occupation profiles: <a href="https://nationalcareers.service.gov.uk" target="_blank">National Careers Service</a>.
+  Employment: <a href="https://www.gov.uk/government/publications/labour-market-and-skills-projections-2020-to-2035" target="_blank">Working Futures 2035</a> (DfE / Warwick IER), SOC 2020.
   AI scores: Gemini Flash via <a href="https://openrouter.ai" target="_blank">OpenRouter</a>.
   Adapted from <a href="https://github.com/karpathy/jobs" target="_blank">karpathy/jobs</a>.
 </div>
@@ -134,6 +120,7 @@ canvas { display: block; flex: 1; cursor: crosshair; }
 
 <div class="tooltip" id="tip">
   <div class="name" id="tp-name"></div>
+  <div class="cat" id="tp-cat"></div>
   <div class="row"><span>AI Exposure</span><span class="val" id="tp-exp"></span></div>
   <div class="row"><span>Pay</span><span class="val" id="tp-pay"></span></div>
   <div class="row"><span>Jobs (2025)</span><span class="val" id="tp-jobs"></span></div>
@@ -148,37 +135,46 @@ const X = C.getContext('2d');
 const tip = document.getElementById('tip');
 let D = [], tiles = [], layer = 'exposure', hov = null;
 
+const MARGIN = 10; // gap between category groups
+const GAP = 1.5;   // gap between tiles within a group
+
 const LIME=[223,241,64],CYAN=[64,241,212],RED=[255,53,53],AMBER=[245,158,11],EMERALD=[16,185,129],VIOLET=[168,85,247];
 function lc(a,b,t){return`rgb(${a[0]+(b[0]-a[0])*t|0},${a[1]+(b[1]-a[1])*t|0},${a[2]+(b[2]-a[2])*t|0})`}
 
 function col(d){
-  if(layer==='exposure'){const v=d.x;if(v==null)return'#1a1a1a';const t=v/10;return t<.5?lc([20,55,20],AMBER,t*2):lc(AMBER,RED,(t-.5)*2)}
-  if(layer==='outlook'){const m={'Growing strongly':lc(EMERALD,LIME,.5),'Growing':lc(LIME,EMERALD,.3),'Stable':lc(AMBER,LIME,.3),'Declining':lc(AMBER,RED,.5),'Declining strongly':lc(RED,[140,15,15],.3)};return m[d.o]||'#1a1a1a'}
-  if(layer==='growth'){const g=d.g;if(g==null)return'#1a1a1a';return g>0?lc([20,45,20],EMERALD,Math.min(1,g/20)):lc([45,20,20],RED,Math.min(1,-g/20))}
-  if(layer==='pay'){const p=d.p;if(!p)return'#1a1a1a';const t=Math.min(1,Math.max(0,(p-18000)/62000));return t<.5?lc(CYAN,LIME,t*2):lc(LIME,VIOLET,(t-.5)*2)}
-  return'#1a1a1a';
+  if(layer==='exposure'){const v=d.x;if(v==null)return'#151518';const t=v/10;return t<.5?lc([20,55,20],AMBER,t*2):lc(AMBER,RED,(t-.5)*2)}
+  if(layer==='outlook'){return({'Growing strongly':lc(EMERALD,LIME,.5),'Growing':lc(LIME,EMERALD,.3),'Stable':lc(AMBER,LIME,.3),'Declining':lc(AMBER,RED,.5),'Declining strongly':lc(RED,[140,15,15],.3)}[d.o])||'#151518'}
+  if(layer==='growth'){const g=d.g;if(g==null)return'#151518';return g>0?lc([20,45,20],EMERALD,Math.min(1,g/20)):lc([45,20,20],RED,Math.min(1,-g/20))}
+  if(layer==='pay'){const p=d.p;if(!p)return'#151518';const t=Math.min(1,Math.max(0,(p-18000)/62000));return t<.5?lc(CYAN,LIME,t*2):lc(LIME,VIOLET,(t-.5)*2)}
+  return'#151518';
 }
 
-function sk(d){
-  if(layer==='exposure')return-(d.x??-1);
-  if(layer==='outlook')return({'Growing strongly':0,'Growing':1,'Stable':2,'Declining':3,'Declining strongly':4}[d.o]??5);
-  if(layer==='growth')return-(d.g??-999);
-  if(layer==='pay')return-(d.p??0);
-  return 0;
+// Sort within category by active metric
+function itemSort(a,b){
+  if(layer==='exposure')return(b.x??-1)-(a.x??-1)||(b.j||0)-(a.j||0);
+  if(layer==='outlook'){const o={'Growing strongly':0,'Growing':1,'Stable':2,'Declining':3,'Declining strongly':4};return(o[a.o]??5)-(o[b.o]??5)||(b.j||0)-(a.j||0)}
+  if(layer==='growth')return(b.g??-999)-(a.g??-999)||(b.j||0)-(a.j||0);
+  if(layer==='pay')return(b.p||0)-(a.p||0)||(b.j||0)-(a.j||0);
+  return(b.j||0)-(a.j||0);
 }
 
-function sq(data,x,y,w,h){
-  if(!data.length||w<=0||h<=0)return[];
-  const tv=data.reduce((s,d)=>s+d._v,0);if(tv<=0)return[];
-  const R=[];let rem=[...data],cx=x,cy=y,cw=w,ch=h;
+// Squarified treemap — standard algorithm
+function squarify(items, x, y, w, h){
+  if(!items.length||w<=0||h<=0)return[];
+  if(items.length===1)return[{d:items[0],x,y,w,h}];
+  const tv=items.reduce((s,d)=>s+d._v,0);
+  if(tv<=0)return[];
+  const R=[];let rem=[...items],cx=x,cy=y,cw=w,ch=h;
   while(rem.length){
-    const wide=cw>=ch,side=wide?ch:cw,tr=rem.reduce((s,d)=>s+d._v,0);
+    const wide=cw>=ch,side=wide?ch:cw;
+    const tr=rem.reduce((s,d)=>s+d._v,0);
     let row=[rem[0]],rs=rem[0]._v;
-    const worst=(r,s)=>{const a=(s/tr)*cw*ch;let m=0;for(const d of r){const f=d._v/s;const aw=wide?a/side:f*side;const ah=wide?f*side:a/side;m=Math.max(m,Math.max(aw/Math.max(ah,.001),ah/Math.max(aw,.001)))}return m};
+    const worst=(r,s)=>{const a=s/tr*cw*ch;let m=0;for(const d of r){const f=d._v/s;const aw=wide?a/side:f*side;const ah=wide?f*side:a/side;m=Math.max(m,Math.max(aw/Math.max(ah,.001),ah/Math.max(aw,.001)))}return m};
     for(let i=1;i<rem.length;i++){const w1=worst(row,rs);const nr=[...row,rem[i]],ns=rs+rem[i]._v;if(worst(nr,ns)<=w1){row=nr;rs=ns}else break}
     const rf=rs/tr,rz=wide?cw*rf:ch*rf;let off=0;
     for(const d of row){const f=d._v/rs;const ts=f*(wide?ch:cw);R.push({d,x:wide?cx:cx+off,y:wide?cy+off:cy,w:wide?rz:ts,h:wide?ts:rz});off+=ts}
-    rem=rem.slice(row.length);if(wide){cx+=rz;cw-=rz}else{cy+=rz;ch-=rz}
+    rem=rem.slice(row.length);
+    if(wide){cx+=rz;cw-=rz}else{cy+=rz;ch-=rz}
   }
   return R;
 }
@@ -188,82 +184,129 @@ function fmt(n){if(n==null)return'—';if(Math.abs(n)>=1e6)return(n/1e6).toFixed
 function draw(){
   const dpr=devicePixelRatio||1,w=C.clientWidth,h=C.clientHeight;
   C.width=w*dpr;C.height=h*dpr;X.setTransform(dpr,0,0,dpr,0,0);
-  X.fillStyle='#000';X.fillRect(0,0,w,h);
+  X.fillStyle='#0a0a0f';X.fillRect(0,0,w,h);
 
-  const s=[...D].sort((a,b)=>{const ka=sk(a),kb=sk(b);return ka!==kb?ka-kb:(b.j||0)-(a.j||0)});
-  s.forEach(d=>{d._v=Math.max(50,d.j||50)});
-  tiles=sq(s,1,1,w-2,h-2);
+  // Group by category
+  const bycat={};
+  for(const d of D){
+    const cat=d.c||'Other';
+    if(!bycat[cat])bycat[cat]=[];
+    bycat[cat].push(d);
+  }
 
-  for(const{d,x,y,w:tw,h:th}of tiles){
+  // Sort items within each category
+  for(const cat in bycat) bycat[cat].sort(itemSort);
+
+  // Build category-level items sorted by total jobs desc
+  const cats=Object.keys(bycat).map(cat=>{
+    const items=bycat[cat];
+    const totalJobs=items.reduce((s,d)=>s+(d.j||1),0);
+    return{cat,items,_v:totalJobs};
+  }).sort((a,b)=>b._v-a._v);
+
+  // First pass: layout category blocks
+  const catRects=squarify(cats,0,0,w,h);
+
+  // Second pass: layout occupations within each category block
+  tiles=[];
+  for(const cr of catRects){
+    const M=MARGIN;
+    const ix=cr.x+M, iy=cr.y+M, iw=cr.w-M*2, ih=cr.h-M*2;
+    if(iw<=0||ih<=0)continue;
+
+    // Assign values as raw job counts
+    cr.d.items.forEach(d=>{d._v=Math.max(1,d.j||1)});
+    const itemTiles=squarify(cr.d.items,ix,iy,iw,ih);
+    tiles.push(...itemTiles);
+
+    // Draw category label
+    if(cr.w>80&&cr.h>25){
+      X.font='600 9px -apple-system,sans-serif';
+      X.fillStyle='rgba(255,255,255,0.2)';
+      X.textAlign='left';X.textBaseline='top';
+      X.fillText(cr.d.cat.toUpperCase(),cr.x+4,cr.y+3);
+    }
+  }
+
+  // Draw tiles
+  for(const tile of tiles){
+    const{d,x,y,w:tw,h:th}=tile;
+    const g=GAP/2;
+    const rx=x+g,ry=y+g,rw=tw-g*2,rh=th-g*2;
+    if(rw<=0||rh<=0)continue;
+
     const isH=hov&&hov.d.s===d.s;
-    X.fillStyle=col(d);X.globalAlpha=isH?1:.88;
-    X.fillRect(x+.5,y+.5,tw-1,th-1);X.globalAlpha=1;
-    if(isH){X.strokeStyle='#fff';X.lineWidth=1.5;X.strokeRect(x+.5,y+.5,tw-1,th-1)}
-    if(tw>38&&th>13){
-      const fs=Math.min(10.5,Math.max(6,Math.min(tw,th)/7.5));
-      X.font=`600 ${fs}px -apple-system,sans-serif`;
+    X.fillStyle=col(d);
+    X.globalAlpha=isH?1:0.75;
+    X.fillRect(rx,ry,rw,rh);
+    X.globalAlpha=1;
+
+    if(isH){X.strokeStyle='#fff';X.lineWidth=1.5;X.strokeRect(rx,ry,rw,rh)}
+
+    // Label
+    if(rw>45&&rh>14){
+      const fs=Math.min(11,Math.max(6.5,Math.min(rw,rh)/7));
+      X.font=`500 ${fs}px -apple-system,sans-serif`;
       const bright=(layer==='exposure'&&(d.x??0)>=6)||(layer==='outlook'&&d.o&&d.o.includes('Growing'))||(layer==='growth'&&(d.g??0)>5)||(layer==='pay'&&(d.p??0)>45000);
-      X.fillStyle=bright?'rgba(0,0,0,0.8)':'rgba(255,255,255,0.85)';
-      X.textAlign='center';X.textBaseline='middle';
-      let lb=d.t;const mc=Math.floor(tw/(fs*.48));
+      X.fillStyle=bright?'rgba(0,0,0,0.85)':'rgba(255,255,255,0.85)';
+      X.textAlign='left';X.textBaseline='top';
+      let lb=d.t;const mc=Math.floor((rw-8)/(fs*.5));
       if(lb.length>mc)lb=lb.slice(0,mc-1)+'…';
-      X.fillText(lb,x+tw/2,y+th/2);
+      X.fillText(lb,rx+4,ry+3);
+
+      // Second line: jobs count
+      if(rh>28&&d.j){
+        X.font=`400 ${Math.max(6,fs-1.5)}px -apple-system,sans-serif`;
+        X.fillStyle=bright?'rgba(0,0,0,0.5)':'rgba(255,255,255,0.45)';
+        X.fillText(fmt(d.j)+' jobs',rx+4,ry+3+fs+2);
+      }
     }
   }
 }
 
 function stats(){
-  const sc=D.filter(d=>d.x!=null);
-  const wp=D.filter(d=>d.p);
-  const tj=D.reduce((s,d)=>s+(d.j||0),0);
-  const tj35=D.reduce((s,d)=>s+(d.j35||0),0);
-  const ch=tj35-tj;
-  const avgE=sc.length?(sc.reduce((s,d)=>s+d.x,0)/sc.length):0;
-
-  // High exposure (7+)
-  const highExp=D.filter(d=>d.x!=null&&d.x>=7);
-  const highExpJobs=highExp.reduce((s,d)=>s+(d.j||0),0);
-
-  // Declining
-  const declining=D.filter(d=>d.o&&d.o.includes('Declining'));
-  const decliningJobs=declining.reduce((s,d)=>s+(d.j||0),0);
-
-  // Median pay
-  const pays=wp.map(d=>d.p).sort((a,b)=>a-b);
-  const medPay=pays.length?pays[pays.length>>1]:0;
+  const sc=D.filter(d=>d.x!=null),wp=D.filter(d=>d.p);
+  const tj=D.reduce((s,d)=>s+(d.j||0),0),tj35=D.reduce((s,d)=>s+(d.j35||0),0),ch=tj35-tj;
+  const avgE=sc.length?sc.reduce((s,d)=>s+d.x,0)/sc.length:0;
+  const highExp=D.filter(d=>d.x!=null&&d.x>=7),highExpJobs=highExp.reduce((s,d)=>s+(d.j||0),0);
+  const declining=D.filter(d=>d.o&&d.o.includes('Declining')),declJobs=declining.reduce((s,d)=>s+(d.j||0),0);
+  const pays=wp.map(d=>d.p).sort((a,b)=>a-b),medPay=pays.length?pays[pays.length>>1]:0;
 
   document.getElementById('s-count').textContent=D.length;
   document.getElementById('s-jobs').textContent=fmt(tj);
   document.getElementById('s-jobs35').textContent=fmt(tj35);
   const chEl=document.getElementById('s-change');
-  chEl.textContent=(ch>=0?'+':'')+fmt(ch);
-  chEl.className='sb-value '+(ch>=0?'lime':'red');
+  chEl.textContent=(ch>=0?'+':'')+fmt(ch);chEl.className='sb-value '+(ch>=0?'lime':'red');
   document.getElementById('s-changepct').textContent=tj?(ch>=0?'+':'')+(ch/tj*100).toFixed(1)+'%':'';
   document.getElementById('s-exp').textContent=avgE.toFixed(1)+'/10';
   document.getElementById('s-exp-sub').textContent=sc.length+' scored';
   document.getElementById('s-highexp').textContent=highExp.length+' roles';
-  document.getElementById('s-highexp-sub').textContent=fmt(highExpJobs)+' jobs exposed';
+  document.getElementById('s-highexp-sub').textContent=fmt(highExpJobs)+' jobs';
   document.getElementById('s-pay').textContent=medPay?'£'+medPay.toLocaleString():'—';
   document.getElementById('s-declining').textContent=declining.length+' roles';
-  document.getElementById('s-declining-sub').textContent=fmt(decliningJobs)+' jobs at risk';
+  document.getElementById('s-declining-sub').textContent=fmt(declJobs)+' jobs';
 }
 
-function updateLegendHint(){
-  const hints={
+function updateHint(){
+  document.getElementById('legend-hint').textContent={
     exposure:'■ 0 minimal ——— 10 maximum AI exposure',
     outlook:'■ declining ——— stable ——— growing strongly',
     growth:'■ shrinking ——— 0% ——— growing fast',
     pay:'■ £18K ——— £50K ——— £80K+',
-  };
-  document.getElementById('legend-hint').textContent=hints[layer]||'';
+  }[layer]||'';
 }
 
 C.addEventListener('mousemove',e=>{
   const r=C.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;
-  hov=tiles.find(t=>mx>=t.x&&mx<=t.x+t.w&&my>=t.y&&my<=t.y+t.h)||null;
+  hov=null;
+  for(const t of tiles){
+    const g=GAP/2;
+    if(mx>=t.x+g&&mx<=t.x+t.w-g&&my>=t.y+g&&my<=t.y+t.h-g){hov=t;break}
+  }
   if(hov){
     const d=hov.d;
     document.getElementById('tp-name').textContent=d.t;
+    document.getElementById('tp-cat').textContent=d.c||'';
     document.getElementById('tp-exp').textContent=d.x!=null?d.x+'/10':'—';
     document.getElementById('tp-pay').textContent=d.p?'£'+d.p.toLocaleString()+(d.pm&&d.px?` (£${(d.pm/1e3|0)}K–£${(d.px/1e3|0)}K)`:''):'—';
     document.getElementById('tp-jobs').textContent=d.j?d.j.toLocaleString():'—';
@@ -285,12 +328,12 @@ C.addEventListener('click',()=>{if(hov&&hov.d.u)open(hov.d.u,'_blank')});
 document.querySelectorAll('.controls button').forEach(b=>{
   b.addEventListener('click',()=>{
     document.querySelectorAll('.controls button').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');layer=b.dataset.layer;updateLegendHint();draw();
+    b.classList.add('active');layer=b.dataset.layer;updateHint();draw();
   });
 });
 addEventListener('resize',draw);
 
-fetch('data.json').then(r=>r.json()).then(data=>{D=data;stats();updateLegendHint();draw()});
+fetch('data.json').then(r=>r.json()).then(data=>{D=data;stats();updateHint();draw()});
 </script>
 </body>
 </html>
