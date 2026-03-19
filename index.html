@@ -75,15 +75,21 @@ canvas { display: block; flex: 1; cursor: crosshair; }
 <div class="header">
   <h1>UK Jobs</h1>
   <div class="intro">
-    A research tool for exploring <strong>738 occupations</strong> from the
-    <a href="https://nationalcareers.service.gov.uk/explore-careers" target="_blank">National Careers Service</a>,
-    enriched with employment projections from
-    <a href="https://www.gov.uk/government/publications/labour-market-and-skills-projections-2020-to-2035" target="_blank">Working Futures 2035</a>.
-    Each rectangle is one occupation — area proportional to employment, colour shows the selected metric.
-    Occupations are grouped by SOC major group (labelled).
-    Hover for details, click to open the full profile.
-    AI exposure scores (0–10) estimate how much AI will reshape each role:
-    <strong>0</strong> = physical/manual, <strong>10</strong> = fully digital.
+    A research tool for visually exploring <strong>412 occupations</strong> across the UK economy, built entirely from official ONS data.
+    Occupations are defined by the
+    <a href="https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2020" target="_blank">Standard Occupational Classification (SOC) 2020</a>
+    — the UK government's framework for classifying jobs into 412 unit groups.
+    Pay data comes from the
+    <a href="https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14" target="_blank">Annual Survey of Hours and Earnings (ASHE) 2025</a>,
+    surveyed from ~300,000 employers.
+    Employment projections are from
+    <a href="https://www.gov.uk/government/publications/labour-market-and-skills-projections-2020-to-2035" target="_blank">Working Futures 2035</a>
+    (DfE&nbsp;/&nbsp;Warwick&nbsp;IER).
+    Each rectangle is one occupation — area proportional to the number of people employed, colour shows the selected metric.
+    Occupations are grouped by SOC major group.
+    AI&nbsp;exposure scores (0–10) estimate how much AI will reshape each role:
+    <strong>0</strong>&nbsp;=&nbsp;physical/hands-on work with minimal AI&nbsp;impact,
+    <strong>10</strong>&nbsp;=&nbsp;routine digital work AI can largely perform today.
   </div>
 </div>
 
@@ -110,9 +116,10 @@ canvas { display: block; flex: 1; cursor: crosshair; }
 <canvas id="canvas"></canvas>
 
 <div class="foot">
-  Occupation profiles: <a href="https://nationalcareers.service.gov.uk" target="_blank">National Careers Service</a>.
-  Employment: <a href="https://www.gov.uk/government/publications/labour-market-and-skills-projections-2020-to-2035" target="_blank">Working Futures 2035</a> (DfE / Warwick IER), SOC 2020.
-  AI scores: Gemini Flash via <a href="https://openrouter.ai" target="_blank">OpenRouter</a>.
+  Occupations: <a href="https://www.ons.gov.uk/methodology/classificationsandstandards/standardoccupationalclassificationsoc/soc2020" target="_blank">SOC 2020</a> (ONS), 412 unit groups.
+  Pay: <a href="https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/occupation4digitsoc2010ashetable14" target="_blank">ASHE Table 14</a> (ONS, April 2025 provisional).
+  Employment projections: <a href="https://www.gov.uk/government/publications/labour-market-and-skills-projections-2020-to-2035" target="_blank">Working Futures 2035</a> (DfE / Warwick IER).
+  AI exposure: Gemini Flash via <a href="https://openrouter.ai" target="_blank">OpenRouter</a>.
   Adapted from <a href="https://github.com/karpathy/jobs" target="_blank">karpathy/jobs</a>.
 </div>
 
